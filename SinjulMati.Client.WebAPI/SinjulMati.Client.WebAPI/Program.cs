@@ -1,0 +1,87 @@
+using Microsoft.IdentityModel.Tokens;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "api1");
+    });
+});
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+        };
+    })
+;
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+//app.MapControllers().RequireAuthorization("ApiScope");
+
+var summaries = new[]
+{
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
+
+app.MapGet("/weatherforecast", () =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast
+        (
+            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            Random.Shared.Next(-20, 55),
+            summaries[Random.Shared.Next(summaries.Length)]
+        ))
+        .ToArray();
+    return forecast;
+})
+    .WithName("GetWeatherForecast")
+    .WithOpenApi()
+    .RequireAuthorization("ApiScope")
+;
+
+app.MapGet("/getIdentity", (HttpContext context) =>
+{
+    var result =
+        from c in context.User.Claims select new { c.Type, c.Value }
+    ;
+
+    return Results.Json(result);
+})
+    .WithName("Identity")
+    .WithOpenApi()
+    .RequireAuthorization("ApiScope")
+;
+
+await app.RunAsync();
+
+internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}

@@ -1,0 +1,268 @@
+﻿
+https://docs.duendesoftware.com/identityserver/v6/quickstarts/0_overview/
+dotnet new --install Duende.IdentityServer.Templates
+dotnet new install Duende.IdentityServer.Templates
+dotnet new -i Duende.IdentityServer.Templates
+https://www.nuget.org/packages/Duende.IdentityServer.Templates
+https://github.com/DuendeSoftware/IdentityServer.Templates
+dotnet new install -h
+
+dotnet new --install Duende.IdentityServer.Templates
+
+mkdir quickstart
+cd quickstart
+mkdir src
+dotnet new sln -n Quickstart
+
+cd src
+dotnet new isempty -n IdentityServer
+
+cd ..
+dotnet sln add ./src/IdentityServer/IdentityServer.csproj
+
+https://localhost:5001/.well-known/openid-configuration
+
+dotnet new webapi -n Api
+cd ..
+dotnet sln add ./src/Api/Api.csproj
+
+"applicationUrl": "https://localhost:6001"
+https://localhost:6001/identity
+
+dotnet new console -n Client
+cd ..
+dotnet sln add ./src/Client/Client.csproj
+dotnet add ./src/Client/Client.csproj package IdentityModel
+dotnet dev-certs https --trust
+https://jwt.ms/
+
+dotnet new isui
+There is also a template called isinmem which combines the basic IdentityServer from the isempty template with the quickstart UI from the isui template.
+
+dotnet new webapp -n WebClient
+cd ..
+dotnet sln add ./src/WebClient/WebClient.csproj
+
+dotnet add package Microsoft.AspNetCore.Authentication.OpenIdConnect
+
+./Pages/
+dotnet new page -n Signout
+public class SignoutModel : PageModel
+{
+    public IActionResult OnGet()
+    {
+        return SignOut("Cookies", "oidc");
+    }
+}
+
+<!-- Add this item to the list -->
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-page="/Signout">Signout</a>
+</li>
+
+Getting claims from the UserInfo endpoint
+such as name, family_name, website etc.
+options.GetClaimsFromUserInfoEndpoint = true;
+
+Add Support for External Authentication
+Microsoft.AspNetCore.Authentication.Google
+<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.8" />
+<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.19" />
+
+GetTokenAsync از Microsoft.AspNetCore.Authentication
+dotnet new page -n CallApi
+
+Duende.IdentityServer.EntityFramework
+dotnet new isef
+dotnet add package Duende.IdentityServer.EntityFramework
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+ConfigurationDbContext: used for configuration data such as clients, resources, and scopes
+PersistedGrantDbContext: used for dynamic operational data such as authorization codes and refresh tokens
+
+Duende.IdentityServer.EntityFramework.Storage
+Microsoft.EntityFrameworkCore.Design
+
+dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+dotnet ef migrations add InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
+dotnet ef migrations add InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
+
+dotnet new isaspid -n IdentityServerAspNetIdentity
+cd ..
+dotnet sln add ./src/IdentityServerAspNetIdentity/IdentityServerAspNetIdentity.csproj
+“Pass123$”
+Duende.IdentityServer.AspNetIdentity
+Note that AddIdentity<ApplicationUser, IdentityRole>() must be invoked before AddIdentityServer().
+
+dotnet sln remove ./src/IdentityServer/IdentityServer.csproj
+rm -r ./src/IdentityServer
+
+dotnet ef migrations add CustomProfileData
+dotnet run /seed
+
+Duende.BFF
+“Backend For Frontend” pattern, or “BFF” 
+
+dotnet new web -n JavaScriptClient
+cd ..
+dotnet sln add ./src/JavaScriptClient/JavaScriptClient.csproj
+
+dotnet add package Microsoft.AspNetCore.Authentication.OpenIdConnect
+dotnet add package Duende.BFF
+dotnet add package Duende.BFF.Yarp
+
+
+------------------
+
+Install with:
+
+.NET 6 SDK: dotnet new --install Duende.IdentityServer.Templates
+
+.NET 7 SDK: dotnet new install Duende.IdentityServer.Templates
+
+If you need to set back your dotnet new list to "factory defaults", use this command:
+
+dotnet new --debug:reinit
+
+To uninstall the templates, use
+
+.NET 6 SDK: dotnet new -u Duende.IdentityServer.Templates
+
+.NET 7 SDK: dotnet new uninstall Duende.IdentityServer.Templates
+
+dotnet new install Duende.IdentityServer.Templates::6.3.1
+
+https://github.com/duendesoftware/IdentityServer
+
+C:\Users\sinju\AppData\Roaming\NuGet
+
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <packageSources>
+        <add key="Duende IdentityServer CI" value="https://www.myget.org/F/duende_identityserver/api/v3/index.json" />
+    </packageSources>
+</configuration>
+
+Resources :: Duende IdentityServer Documentation
+https://docs.duendesoftware.com/identityserver/v6/overview/resources/
+
+Resources :: Duende IdentityServer Documentation
+https://docs.duendesoftware.com/identityserver/v6/overview/resources/
+
+(3) OAuth – the good Parts - Dominick Baier - NDC Porto 2022 - YouTube
+https://www.youtube.com/watch?v=Ps8ep-glDfc
+
+Securing SPAs and Blazor Applications using the BFF (Backend for Frontend) Pattern - Dominick Baier - YouTube
+https://www.youtube.com/watch?v=xzRhabmlc8M
+
+Automated OAuth Access Token Management for .NET Workers and ASP.NET Web Applications - YouTube
+https://www.youtube.com/watch?v=zr-LAYg5BCE
+
+Basics Part 1: Introduction to ASP.NET Core Authentication & Authorization - YouTube
+https://www.youtube.com/watch?v=02Yh3sxzAYI
+
+Use cookie authentication without ASP.NET Core Identity | Microsoft Learn
+https://learn.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-7.0
+
+Basics Part 2a: Adding external Authentication to your ASP.NET Core Application - YouTube
+https://www.youtube.com/watch?v=HH_tw7dFhpg
+
+Basics Part 2b: The "external authentication callback" Pattern - YouTube
+https://www.youtube.com/watch?v=daeVaU5CmPw
+
+Dominick Baier - Authorization for Modern Applications @ DevConf 2018 - YouTube
+https://www.youtube.com/watch?v=Dlrf85NTuAU
+
+Duende IdentityServer
+https://demo.duendesoftware.com/
+
+docs.duendesoftware.com/IdentityServer/v6/docs/content/quickstarts at main · DuendeSoftware/docs.duendesoftware.com · GitHub
+https://github.com/DuendeSoftware/docs.duendesoftware.com/tree/main/IdentityServer/v6/docs/content/quickstarts
+
+DuendeSoftware/Samples: Samples for our Products
+https://github.com/DuendeSoftware/Samples
+
+DuendeSoftware/Duende.AccessTokenManagement: Automatic token management for machine to machine and user-centric web app OAuth and OIDC flows
+https://github.com/DuendeSoftware/Duende.AccessTokenManagement/tree/main
+
+Home · DuendeSoftware/Duende.AccessTokenManagement Wiki
+https://github.com/DuendeSoftware/Duende.AccessTokenManagement/wiki
+
+DuendeSoftware/BFF: Framework for ASP.NET Core to secure SPAs using the Backend-for-Frontend (BFF) pattern
+https://github.com/DuendeSoftware/BFF
+
+DuendeSoftware/IdentityServer: The most flexible and standards-compliant OpenID Connect and OAuth 2.x framework for ASP.NET Core
+https://github.com/DuendeSoftware/IdentityServer
+
+ sinju   SinjulMati.IDP    dotnet new install Duende.IdentityServer.Templates               in pwsh at 15:08:54
+The following template packages will be installed:
+   Duende.IdentityServer.Templates
+
+Success: Duende.IdentityServer.Templates::6.3.1 installed the following templates:
+Template Name                                               Short Name     Language  Tags
+----------------------------------------------------------  -------------  --------  ------------------
+Duende BFF Host using a Remote API                          bff-remoteapi  [C#]      Web/IdentityServer
+Duende BFF using a Local API                                bff-localapi   [C#]      Web/IdentityServer
+Duende IdentityServer Empty                                 isempty        [C#]      Web/IdentityServer
+Duende IdentityServer Quickstart UI (UI assets only)        isui           [C#]      Web/IdentityServer
+Duende IdentityServer with ASP.NET Core Identity            isaspid        [C#]      Web/IdentityServer
+Duende IdentityServer with Entity Framework Stores          isef           [C#]      Web/IdentityServer
+Duende IdentityServer with In-Memory Stores and Test Users  isinmem        [C#]      Web/IdentityServer
+
+dotnet new isui
+
+SinjulMati.IDP.IdentityServer
+    SinjulMati.IDP.IdentityServer.RemoteAPI
+    SinjulMati.IDP.IdentityServer.LocalAPI
+    SinjulMati.IDP.IdentityServer.Empty
+    SinjulMati.IDP.IdentityServer.UI
+    SinjulMati.IDP.IdentityServer.Identity
+    SinjulMati.IDP.IdentityServer.EF
+    SinjulMati.IDP.IdentityServer.InMemory
+    SinjulMati.IDP.IdentityServer.EXE
+
+SinjulMati.Client.WebAPI
+SinjulMati.Client.WebApp
+SinjulMati.Client.Console
+
+---------------------
+
+
+<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
+<PackageReference Include="IdentityModel" Version="6.1.0" />
+<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.8" />
+<PackageReference Include="Duende.IdentityServer" Version="6.3.2" />
+<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.2" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.8">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+</PackageReference>
+<PackageReference Include="Serilog.AspNetCore" Version="6.0.0" />
+<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
+<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+      
+var cnn = "Server=(localdb)\\MSSQLLocalDB; Database=SinjulMati_IDP_DB; Trusted_Connection=True; MultipleActiveResultSets=True; Encrypt=False;";
+string cnn = "Server=.; Database=SinjulMati_IDP_DB; User Id=sa; Password=Go2sh_Go2sh; Encrypt=false; MultipleActiveResultSets=true;";
+Add-Migration Init -Context PersistedGrantDbContext -o Data/PersistedGrantDbContextMigration
+Update-Database -Context PersistedGrantDbContext
+Add-Migration Init -Context ConfigurationDbContext -o Data/ConfigurationDbContextMigration
+Update-Database -Context ConfigurationDbContext
+
+https://localhost:7003/.well-known/openid-configuration
+https://localhost:7003/diagnostics
+https://localhost:7003/grants
+https://localhost:7003/serversidesessions
+https://localhost:7003/ciba/all
+https://github.com/duendesoftware/IdentityServer
+https://github.com/duendesoftware/samples
+ Welcome to Duende IdentityServer (version 6.3.2)
+IdentityServer publishes a discovery document where you can find metadata and links to all the endpoints, key material, etc.
+Click here to see the claims for your current session.
+Click here to manage your stored grants.
+Click here to view the server side sessions.
+Click here to view your pending CIBA login requests.
+Here are links to the source code repository, and ready to use samples.
+
